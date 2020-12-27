@@ -2,8 +2,8 @@
   imports = [
     ## Uncomment at most one of the following to select the target system:
     # ./generic-aarch64 # (note: this is the same as 'rpi3')
-    # ./rpi4
-    ./rpi3
+    ./rpi4
+    # ./rpi3
   ];
 
   # The installer starts with a "nixos" user to allow installation, so add the SSH key to
