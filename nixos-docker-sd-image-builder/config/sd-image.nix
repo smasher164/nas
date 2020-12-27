@@ -9,7 +9,7 @@
   # The installer starts with a "nixos" user to allow installation, so add the SSH key to
   # that user. Note that the key is, at the time of writing, put in `/etc/ssh/authorized_keys.d`
   users.extraUsers.nixos.openssh.authorizedKeys.keys = [
-    "ssh-ed25519 ..."
+    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC9RwUBWWGe67XSDenCkGBjO/GUSFNYgq1EMPAcoQkcf1Dl8Q5Mf84JBUwpbdIZdR1AayBg+Af5E7c+ywtxrq7tMaTQhomVSyMcJteWrTBUJTfm1wSh5yxSZaGv+uDHbuRmJ3CknCLD7A/CY+/hjO8wMU1Em4oG2phm4gSSV1GKifD/3ExrigJHBpArNwR27RBUGq49/1BQbi+1mgPAI4k7Cqvpz5+FMkHiPHfYI1nt1eSvVGJpIlhbec9WraAH5nu1kT+ZAOoQstEAfkA5j52o2/uls/yC5MrrWTVRzRjRL7w8aWcGkdSORaeTkvBMkM8BtTDQ2RgSbBkHt8NKYRwh akhil@Akhils-MacBook-Air.local"
   ];
 
   # bzip2 compression takes loads of time with emulation, skip it. Enable this if you're low
