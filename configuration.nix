@@ -1,7 +1,3 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { config, pkgs, lib, ... }:
 
 {
@@ -35,6 +31,11 @@
     useDHCP = false;
     interfaces.eth0.useDHCP = true;
     interfaces.wlan0.useDHCP = true;
+    firewall = {
+      allowedTCPPorts = [ 80 443 ];
+      allowedUDPPorts = [ 41641 ];
+      interfaces.tailscale0.allowedTCPPorts = [ 22 ];
+    };
   };
 
   time.timeZone = "America/New_York"; # Eastern Time
@@ -70,23 +71,38 @@
     isNormalUser = true;
     home = "/home/akhil";
     extraGroups = [ "wheel" "networkmanager" ]; # Enable ‘sudo’ for the user.
-    openssh.authorizedKeys.keys = [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC9RwUBWWGe67XSDenCkGBjO/GUSFNYgq1EMPAcoQkcf1Dl8Q5Mf84JBUwpbdIZdR1AayBg+Af5E7c+ywtxrq7tMaTQhomVSyMcJteWrTBUJTfm1wSh5yxSZaGv+uDHbuRmJ3CknCLD7A/CY+/hjO8wMU1Em4oG2phm4gSSV1GKifD/3ExrigJHBpArNwR27RBUGq49/1BQbi+1mgPAI4k7Cqvpz5+FMkHiPHfYI1nt1eSvVGJpIlhbec9WraAH5nu1kT+ZAOoQstEAfkA5j52o2/uls/yC5MrrWTVRzRjRL7w8aWcGkdSORaeTkvBMkM8BtTDQ2RgSbBkHt8NKYRwh akhil@Akhils-MacBook-Air.local" ];
+  };
+
+  # Passwordless sudo
+  security.sudo.wheelNeedsPassword = false;
+
+  # Permit empty password for sshd
+  security.pam.services = {
+    "sshd" = {
+      allowNullPassword = true;
+    };
   };
 
   # List packages installed in system profile. To search, run:
-  # $ nix search wget
   environment.systemPackages = with pkgs; [
     vim
     raspberrypi-tools
+    tailscale
   ];
 
   # Enable the OpenSSH daemon.
   services.openssh = {
     enable = true;
+    openFirewall = false;
     permitRootLogin = "yes";
-    passwordAuthentication = false;
     challengeResponseAuthentication = false;
+    extraConfig = ''
+      PermitEmptyPasswords yes
+    '';
   };
+
+  # Enable Tailscale
+  services.tailscale.enable = true;
 
   systemd.services.sshd.wantedBy = pkgs.lib.mkForce [ "multi-user.target" ];
 
