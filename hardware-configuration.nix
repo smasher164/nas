@@ -23,6 +23,11 @@
       fsType = "vfat";
     };
 
+  fileSystems."/nas" =
+    { device = "nas";
+      fsType = "zfs";
+    };
+
   swapDevices = [ ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";

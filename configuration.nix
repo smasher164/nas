@@ -21,12 +21,14 @@
       "console=ttyAMA0,115200"
       "console=tty1"
     ];
+    supportedFilesystems = [ "zfs" ];
   };
 
   # Enable additional firmware (such as Wi-Fi drivers).
   hardware.enableRedistributableFirmware = true;
 
   networking = {
+    hostId = "6459f901"; # Hex form of tailscale IP
     hostName = "nixos";
     useDHCP = false;
     interfaces.eth0.useDHCP = true;
@@ -83,6 +85,7 @@
   };
 
   # List packages installed in system profile. To search, run:
+  # $ nix search wget
   environment.systemPackages = with pkgs; [
     vim
     raspberrypi-tools
