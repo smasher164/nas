@@ -34,8 +34,7 @@
     interfaces.eth0.useDHCP = true;
     interfaces.wlan0.useDHCP = true;
     firewall = {
-      allowedTCPPorts = [ 80 443 ];
-      interfaces.tailscale0.allowedTCPPorts = [ 22 ];
+      interfaces.tailscale0.allowedTCPPorts = [ 22 80 443 ];
     };
   };
 
