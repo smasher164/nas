@@ -90,6 +90,7 @@
     vim
     raspberrypi-tools
     tailscale
+    openssl
   ];
 
   # Enable the OpenSSH daemon.

@@ -28,6 +28,11 @@
       fsType = "zfs";
     };
 
+  fileSystems."/nas/backup" =
+    { device = "nas/backup";
+      fsType = "zfs";
+    };
+
   swapDevices = [ ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
