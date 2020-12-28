@@ -29,7 +29,7 @@
 
   networking = {
     hostId = "6459f901"; # Hex form of tailscale IP
-    hostName = "nixos";
+    hostName = "nas";
     useDHCP = false;
     interfaces.eth0.useDHCP = true;
     interfaces.wlan0.useDHCP = true;
