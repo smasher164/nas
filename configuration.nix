@@ -33,7 +33,6 @@
     interfaces.wlan0.useDHCP = true;
     firewall = {
       allowedTCPPorts = [ 80 443 ];
-      allowedUDPPorts = [ 41641 ];
       interfaces.tailscale0.allowedTCPPorts = [ 22 ];
     };
   };
