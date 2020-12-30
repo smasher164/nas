@@ -34,7 +34,7 @@
     interfaces.eth0.useDHCP = true;
     interfaces.wlan0.useDHCP = true;
     firewall = {
-      interfaces.tailscale0.allowedTCPPorts = [ 22 80 443 ];
+      interfaces.tailscale0.allowedTCPPorts = [ 22 80 443 445 ];
     };
   };
 
@@ -101,6 +101,33 @@
     extraConfig = ''
       PermitEmptyPasswords yes
     '';
+  };
+
+  # Enable Samba.
+  services.samba = {
+    enable = true;
+    enableNmbd = false;
+    enableWinbindd = false;
+    extraConfig = ''
+      workgroup = WORKGROUP
+      server string = nas
+      disable netbios = yes
+      guest account = nobody
+      map to guest = bad user
+      min protocol = SMB2
+      vfs objects = catia fruit streams_xattr
+      fruit:metadata = stream
+    '';
+    shares.backup = {
+      path = "/nas/backup";
+      browseable = "yes";
+      "writeable" = "yes";
+      "guest ok" = "yes";
+      "guest only" = "yes";
+      "force user" = "akhil";
+      "vfs objects" = "catia fruit streams_xattr";
+      "fruit:time machine" = "yes";
+    };
   };
 
   # Enable Tailscale
