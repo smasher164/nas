@@ -1,5 +1,24 @@
-{ config, pkgs, lib, ... }:
+{ config, lib, ... }:
 
+let
+  # Last known working commit where everything works.
+  pkgs = import
+    (builtins.fetchTarball {
+      name = "nixos-last-working";
+      url = "https://github.com/NixOS/nixpkgs/archive/2f47650c2f28d87f86ab807b8a339c684d91ec56.tar.gz";
+      sha256 = "17akl75x28rzq97gaad32flswdsp150nfsg7h909kda721zql71a";
+    })
+    { };
+
+  # Latest commit on nixos-unstable.
+  latest = import
+    (builtins.fetchTarball {
+      name = "nixos-latest";
+      url = "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz";
+      sha256 = "1fmwkb2wjfrpx8fis4x457vslam0x8vqlpfwqii6p9vm33dyxhzk";
+    })
+    { };
+in
 {
   imports =
     [
@@ -83,14 +102,13 @@
     };
   };
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    vim
-    raspberrypi-tools
-    tailscale
-    openssl
-    usbutils
+  # List packages installed in system profile.
+  environment.systemPackages = [
+    latest.vim
+    latest.libraspberrypi
+    latest.tailscale
+    latest.openssl
+    latest.usbutils
   ];
 
   # Enable the OpenSSH daemon.
@@ -150,4 +168,3 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "21.03"; # Did you read the comment?
 }
-
