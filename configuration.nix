@@ -14,8 +14,8 @@ let
   latest = import
     (builtins.fetchTarball {
       name = "nixos-latest";
-      url = "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz";
-      sha256 = "1fmwkb2wjfrpx8fis4x457vslam0x8vqlpfwqii6p9vm33dyxhzk";
+      url = "https://github.com/NixOS/nixpkgs/archive/253aecf69ed7595aaefabde779aa6449195bebb7.tar.gz";
+      sha256 = "14szn1k345jfm47k6vcgbxprmw1v16n7mvyhcdl7jbjmcggjh4z7";
     })
     { };
 in
@@ -106,7 +106,6 @@ in
   environment.systemPackages = [
     latest.vim
     latest.libraspberrypi
-    latest.tailscale
     latest.openssl
     latest.usbutils
   ];
@@ -159,6 +158,13 @@ in
     autoScrub.enable = true;
     autoSnapshot.enable = true;
   };
+
+  # Plex
+  services.plex = {
+    enable = true;
+    openFirewall = true;
+  };
+  nixpkgs.config.allowUnfree = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
