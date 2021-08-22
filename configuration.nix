@@ -159,11 +159,12 @@ in
     autoSnapshot.enable = true;
   };
 
-  # Jellyfin
-  services.jellyfin = {
+  # Plex
+  services.plex = {
     enable = true;
     openFirewall = true;
   };
+  nixpkgs.config.allowUnfree = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
