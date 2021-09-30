@@ -1,3 +1,4 @@
 nixos-sd-image-21.03pre-git-aarch64-linux.img
 wifi.nix
 zfs.nas-backup.secret
+zpool.cache
