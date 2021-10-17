@@ -4,8 +4,9 @@ let in {
   imports =
 [
   "${fetchTarball "https://github.com/NixOS/nixos-hardware/archive/936e4649098d6a5e0762058cb7687be1b2d90550.tar.gz" }/raspberry-pi/4"
-        ./hardware-configuration.nix
+  ./hardware-configuration.nix
   ./wifi.nix
+  ./hass-secrets.nix
 ];
 
   boot.supportedFilesystems = [ "zfs" ];
@@ -85,4 +86,26 @@ let in {
   services.xserver.enable = false;
 
   hardware.pulseaudio.enable = true;
+
+  services.home-assistant = {
+    enable = true;
+    openFirewall = true;
+    config = {
+      homeassistant = {
+        name = "Home";
+        unit_system = "metric";
+        time_zone = "America/New_York";
+        auth_providers = [
+          { type = "trusted_networks";
+            trusted_networks = ["0.0.0.0/0"];
+            allow_bypass_login = true;
+          }
+          { type = "homeassistant"; }
+        ];
+      };
+      default_config = {};
+      met = {};
+      http = {};
+    };
+  };
 }
