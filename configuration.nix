@@ -90,6 +90,19 @@ let in {
   services.home-assistant = {
     enable = true;
     openFirewall = true;
+    package = (pkgs.home-assistant.override {
+      extraPackages = py: with py; [
+        pyipp
+        PyChromecast
+        aioshelly
+        aiohttp-cors
+        aiodiscover
+        sqlalchemy
+        plexapi
+      ];
+    }).overrideAttrs (_: {
+      doInstallCheck = false;
+    });
     config = {
       homeassistant = {
         name = "Home";
@@ -106,6 +119,33 @@ let in {
       default_config = {};
       met = {};
       http = {};
+    };
+    lovelaceConfig = {
+      title = "Home";
+      views = [
+        {
+          path = "default_view";
+          title = "Home";
+          cards = [
+            {
+              type = "light";
+              entity = "light.shellydimmer2_e8db84d4833d";
+              name = "Akhil's Bedroom Light";
+            }
+            {
+              type = "sensor";
+              entity = "sensor.shellydimmer2_e8db84d4833d_device_temperature";
+              name = "Shelly Temperature";
+              graph = "line";
+            }
+            {
+              type = "weather-forecast";
+              entity = "weather.home";
+              show_forecast = true;
+            }
+          ];
+        }
+      ];
     };
   };
 }
