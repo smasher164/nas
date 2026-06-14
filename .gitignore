@@ -1,4 +1,6 @@
 # Secrets — provided out-of-band (present on the Mac working dir + the Pi /etc/nixos), never committed.
 # wifi.nix holds the WLAN PSK; zfs.nas-backup.secret is the ZFS dataset key.
+# hass-secrets.nix = Home Assistant secrets; ignored so secrets never get pushed.
 wifi.nix
 zfs.nas-backup.secret
+hass-secrets.nix
