@@ -1,0 +1,4 @@
+# Secrets — provided out-of-band (present on the Mac working dir + the Pi /etc/nixos), never committed.
+# wifi.nix holds the WLAN PSK; zfs.nas-backup.secret is the ZFS dataset key.
+wifi.nix
+zfs.nas-backup.secret
